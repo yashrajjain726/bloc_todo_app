@@ -1,5 +1,6 @@
 import 'package:bloc_todo_app/cubits/filter_todos/filter_todos_cubit.dart';
 import 'package:bloc_todo_app/cubits/todo_list/todo_list_cubit.dart';
+import 'package:bloc_todo_app/pages/todo_page/todo_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,14 +21,34 @@ class TodoList extends StatelessWidget {
       },
       itemBuilder: (context, index) {
         return Dismissible(
-          background: showBackground(0),
-          secondaryBackground: showBackground(1),
-          key: ValueKey(todos[index].id),
-          child: Text(
-            todos[index].desc,
-            style: const TextStyle(fontSize: 20),
-          ),
-        );
+            background: showBackground(0),
+            secondaryBackground: showBackground(1),
+            key: ValueKey(todos[index].id),
+            onDismissed: (_) {
+              context.read<TodoListCubit>().removeTodos(todos[index]);
+            },
+            confirmDismiss: (_) {
+              return showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Are you Sure?'),
+                      content: const Text('Do you really want to delete?'),
+                      actions: [
+                        TextButton(
+                            onPressed: () => Navigator.pop(context, false),
+                            child: const Text('No')),
+                        TextButton(
+                            onPressed: () => Navigator.pop(context, true),
+                            child: const Text('Yes'))
+                      ],
+                    );
+                  },
+                  barrierDismissible: false);
+            },
+            child: TodoItem(
+              todo: todos[index],
+            ));
       },
     );
   }
