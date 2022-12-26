@@ -11,6 +11,7 @@ import 'package:bloc_todo_app/models/todo_model.dart';
 part 'filter_todos_state.dart';
 
 class FilterTodosCubit extends Cubit<FilterTodosState> {
+  final initialFilterTodos;
   late final StreamSubscription todoFilterSubsription;
   late final StreamSubscription todoListSubsription;
   late final StreamSubscription todoSearchSubsription;
@@ -21,7 +22,8 @@ class FilterTodosCubit extends Cubit<FilterTodosState> {
     required this.todoFilterCubit,
     required this.todoListCubit,
     required this.todoSearchCubit,
-  }) : super(FilterTodosState.initial()) {
+    required this.initialFilterTodos,
+  }) : super(FilterTodosState(filteredTodos: initialFilterTodos)) {
     todoFilterSubsription =
         todoFilterCubit.stream.listen((TodoFilterState todoFilterState) {
       setFilteredTodos();
