@@ -14,17 +14,17 @@ class TodoPage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
-            child: Column(children: const [
-              TodoHeader(),
-              CreateTodos(),
-              SizedBox(
+            child: Column(children: [
+              const TodoHeader(),
+              const CreateTodos(),
+              const SizedBox(
                 height: 20,
               ),
               SearchAndFilterTodos(),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              TodoList()
+              const TodoList()
             ]),
           ),
         ),
