@@ -1,4 +1,4 @@
-import 'package:bloc_todo_app/cubits/todo_list/todo_list_cubit.dart';
+import 'package:bloc_todo_app/blocs/todo_list/todo_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +25,7 @@ class _CreateTodosState extends State<CreateTodos> {
       decoration: const InputDecoration(labelText: 'What to do ?'),
       onSubmitted: (String? todoDesc) {
         if (todoDesc != null && todoDesc.trim().isNotEmpty) {
-          context.read<TodoListCubit>().addTodo(todoDesc);
+          context.read<TodoListBloc>().add(AddTodoEvent(todoDesc: todoDesc));
           todoController.clear();
         }
       },
